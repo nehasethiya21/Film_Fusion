@@ -4,7 +4,7 @@ import json
 from flask import Flask, request, render_template, redirect, url_for
 import webbrowser
 from Recomender import Recomend
-from tmdb import tmdb_get , tmdb_search_movies
+from tmdb import tmdb_get , tmdb_search_movies, get_trending
 import time
 
 
@@ -14,8 +14,14 @@ app.debug = False
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", query="", results=None)
+    trends=[]
+    for t in get_trending():
+        if t:
+            if t['media_type']=='movie':
+                trends.append(t)
 
+    return render_template("index.html", query="",trending=trends[:5], results=None)
+    
 @app.route("/search", methods=["POST"])
 def search_post():
     query = request.form.get("query")
@@ -26,6 +32,10 @@ def search_post():
         return render_template("error.html", message=results["error"])
     return render_template("results.html", results=results["results"][:8], query=query, current_page=1, total_pages=results["total_pages"])
 
+
+@app.route("/search_by_name")
+def movie_search():
+    return render_template("testing.html")
 
 @app.route("/movie/<int:movie_id>")
 def movie_detail(movie_id):

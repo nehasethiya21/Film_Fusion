@@ -20,25 +20,16 @@
     <!-- Core theme CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@300;400&display=swap');
+</style>
 
-<body id="page-top">
+<body id="page-top" style="background: black;">
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container px-4 px-lg-5">
+        <div class="container px-4 px-lg-5" style="font-family: 'Poppins' !important;">
             <a class="navbar-brand" href="#page-top">Film Fusion</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu <i class="fas fa-bars"></i>
-            </button>
-            <!--
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        -->
         </div>
     </nav>
 
@@ -47,49 +38,45 @@
         <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
             <div class="d-flex justify-content-center">
                 <div class="text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">Film Fusion</h1>
+                    <h1 class="mx-auto my-0 text-uppercase"  style="font-family: 'Poppins' !important;">Film Fusion</h1>
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">
                         An advanced Multi-Model Movie Recommendations system
                     </h2>
 
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error }}</div>
-                    {% endif %}
-
-                    <form method="POST" action="{{ url_for('search_post') }}">
-                        <div class="mb-3">
-                            <input 
-                                type="text" 
-                                name="query" 
-                                class="form-control" 
-                                placeholder="Enter movie title…" 
-                                value="{{ query }}"
-                                required
-                            >
+                    <div style="display:flex; justify-content: space-evenly;">
+                        <div style="width:300px; height: 100px;">
+                            <form method="GET" action="{{ url_for('movie_search') }}">
+                                <button type="submit" class="btn btn-primary w-100">Search Movies</button>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Search</button>
-                    </form>
+                        <div style="width:300px; height: 100px;">
+                            <button type="button" onclick="window.location.href='http://127.0.0.1:5050/'" class="btn btn-primary w-100">Explore new Movies and Shows</button>
+                        </div>
+                    </div>
 
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- About -->
-    <section class="about-section text-center" id="about">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-lg-8">
-                    <h2 class="text-white mb-4">Built with Bootstrap 5</h2>
-                    <p class="text-white-50">
-                        Grayscale is a free Bootstrap theme created by Start Bootstrap.
-                    </p>
-                </div>
+
+    <h2 style="padding-left: 50px; color: white; margin-bottom: 25px;">Trending Movies and Shows:</h2>
+    <div style="display:flex; flex-direction: row; align-items: center; justify-content: space-evenly;">
+        {% for tg in trending %}
+            <div class="col-2">
+                <a href="{{ url_for('movie_detail', movie_id=tg.id) }}" class="text-decoration-none text-dark">
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;" class="movie-card text-center">
+                        {% if tg.poster_path %}
+                            <img class="img-fluid rounded mb-2"
+                                 src="https://image.tmdb.org/t/p/w200{{ tg.poster_path }}">
+                        {% endif %}
+                        <strong style="color:white;">{{ tg.title }} {{ tg.name }}</strong>
+                    </div>
+                </a>
             </div>
-            <img class="img-fluid" 
-                 src="{{ url_for('static', filename='assets/img/ipad.png') }}" alt="iPad" />
-        </div>
-    </section>
+        {% endfor %}
+    </div>
+    
 
     <!-- Contact -->
     <section class="contact-section bg-black" id="contact">
@@ -99,10 +86,11 @@
                 <div class="col-md-4 mb-3 mb-md-0">
                     <div class="card py-4 h-100">
                         <div class="card-body text-center">
-                            <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Address</h4>
+                            <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Developer</h4>
                             <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">4923 Market Street</div>
+                            <div class="text-black-50">Neha Sethiya</div>
+                            <div class="small text-black-50">LNCTE Data Science</div>
                         </div>
                     </div>
                 </div>
@@ -113,18 +101,19 @@
                             <i class="fas fa-envelope text-primary mb-2"></i>
                             <h4 class="text-uppercase m-0">Email</h4>
                             <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50"><a href="#!">hello@yourdomain.com</a></div>
+                            <div class="small text-black-50"><a href="#!">SethiyaNeha14@gmail.com</a></div>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="col-md-4 mb-3 mb-md-0">
                     <div class="card py-4 h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0">Phone</h4>
+                            <h4 class="text-uppercase m-0">Github</h4>
                             <hr class="my-4 mx-auto" />
-                            <div class="small text-black-50">+1 (555) 902-8832</div>
+                            <div class="small text-black-50"><a href="#!">nehasethiya21</a></div>
                         </div>
                     </div>
                 </div>

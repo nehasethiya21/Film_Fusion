@@ -11,6 +11,17 @@ def sanitize_input(input_str):
     return str(input_str).strip()[:100]
 
 
+def get_trending():
+    x=0
+    while x<4:
+        try:
+            return requests.get("https://api.themoviedb.org/3/trending/all/day?api_key="+get_tmdb_api_key()).json()['results']
+        except:
+            print('.')
+            time.sleep(0.5)
+            x+=1
+    return []
+
 def get_tmdb_api_key(c=count):
     c[0]+=1
     api_key=""

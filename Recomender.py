@@ -30,4 +30,3 @@ def Recomend(py_code):
 
   return sorted(ALL.split("</think>")[1].split('\n'))[-1].split('/')
 
-#print(Recomend(input("->")))

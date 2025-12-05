@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Film Fusion</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* 🔥 NEW MOVIE TEMPLATE BACKGROUND */
+.hero{
+    height: 100vh;
+    width: 100%;
+    background: 
+        linear-gradient(to bottom, rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
+        url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=1500&q=80');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* 🔥 Light Effects */
+.light{
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255,0,0,0.25), transparent 60%);
+    top: -200px;
+    left: -200px;
+    filter: blur(100px);
+}
+
+.light2{
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(0,128,255,0.25), transparent 60%);
+    bottom: -200px;
+    right: -200px;
+    filter: blur(120px);
+}
+
+/* CONTENT BOX */
+.content-box{
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    width: 90%;
+}
+
+/* TITLE */
+.title{
+    font-size: 75px;
+    font-weight: 800;
+    letter-spacing: 14px;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(90deg, #ff4747, #ffe6e6, #4dcaff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 35px rgba(255,255,255,0.3);
+}
+
+/* SUBTITLE */
+.subtitle{
+    font-size: 22px;
+    margin-top: 10px;
+    opacity: 0.9;
+}
+
+/* SEARCH BOX */
+.search-box{
+    margin-top: 45px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* GLASS INPUT */
+.search-box input{
+    width: 420px;
+    padding: 16px 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    font-size: 17px;
+    color: white;
+}
+
+.search-box input::placeholder{
+    color: #f1f1f1;
+}
+
+/* NEON BUTTON */
+.search-box button{
+    padding: 16px 40px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, #ff4747, #ff7d7d, #4dcaff);
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 2px;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 0 15px rgba(255,0,0,0.5);
+    transition: 0.3s;
+}
+
+.search-box button:hover{
+    transform: scale(1.07);
+    box-shadow: 0 0 25px rgba(255,0,0,0.8);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+
+    <!-- LIGHT EFFECTS -->
+    <div class="light"></div>
+    <div class="light2"></div>
+
+    <div class="content-box">
+        <h1 class="title">FILM FUSION</h1>
+        <p class="subtitle">An advanced Multi-Model Movie Recommendations system</p>
+
+        <div class="search-box">
+            <form method="POST" action="{{ url_for('search_post') }}">
+                <input 
+                        type="text" 
+                        name="query" 
+                        class="form-control" 
+                        placeholder="Enter movie title…" 
+                        value="{{ query }}"
+                        required
+                    >
+                
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
