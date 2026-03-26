@@ -17,7 +17,7 @@ def Recomend(py_code):
               "content":py_code
           }
       ],
-      model="qwen-3-32b",
+      model="llama3.1-8b",
       stream=True,
       max_completion_tokens=4096,
       temperature=0.2,
@@ -28,5 +28,5 @@ def Recomend(py_code):
   for chunk in stream:
     ALL+=chunk.choices[0].delta.content or ""
 
-  return sorted(ALL.split("</think>")[1].split('\n'))[-1].split('/')
+  return sorted(ALL.split('\n'))[-1].split('/')
 

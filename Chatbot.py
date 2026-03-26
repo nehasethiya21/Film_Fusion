@@ -31,12 +31,12 @@ def chat():
     chat_history.append({"role": "user", "content": user_msg})
 
     completion = client.chat.completions.create(
-        model="qwen-3-32b",
+        model="llama3.1-8b",
         messages=chat_history,
         max_completion_tokens=2048,
     )
 
-    reply = completion.choices[0].message.content.split("</think>")[1][2:]
+    reply = completion.choices[0].message.content
     #print(reply)
 
     chat_history.append({"role": "assistant", "content": reply})
